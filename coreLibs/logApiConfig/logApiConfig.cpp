@@ -1,45 +1,50 @@
 /******************************************************************************************************************
- *	File Name    - logMngConfig.cpp
+ *	File Name    - logApiConfig.cpp
  * Author       - gnarayana
  * Modifier     - gnarayana
  * Create Date  - 11/April/2014 
  * Modifed Date - 11/April/2014
- * Description  - Container class LogMngConfig implementation.
+ * Description  - Container class LogApiConfig implementation.
  * Project		 - NAL ( Network application logging )					
  * Module		 - LogManger
  * BU				 - DevGnana
  * Company		 - Cliff S
  * License		 - GPLV2 ( Open Source ) 
  ******************************************************************************************************************/
-#include "logMngConfig.h"
+#include "logApiConfig.h"
+#include <fstream>
 
-atomic<LogMngConfig*> LogMngConfig::_instance ;
-mutex	LogMngConfig::_mutex;
+std::atomic<LogApiConfig*> LogApiConfig::_instance ;
+std::mutex	LogApiConfig::_mutex;
 
-LogMngConfig* LogMngConfig::getInstance()
+LogApiConfig* LogApiConfig::getInstance()
 {
 	if (_instance == nullptr) {
 		_mutex.lock();
-		_instance = new LogMngConfig();
+		_instance = new LogApiConfig();
 		_mutex.unlock();
 	}
 	return _instance;
 }
 
-LogMngConfig::LogMngConfig():_statRdCfg(false)
+LogApiConfig::LogApiConfig():_statRdCfg(false)
 {
 
 }
 
-void LogMngConfig::readConfig(const string filePath)
+void LogApiConfig::readConfig(const std::string filePath)
 {
-	if(_statRdCfg)
+	if(!_statRdCfg)
 	{
 		//Implement read config and del ME :)
+		std::ifstream ifile(filePath);
+		while( !ifile.eof() )
+		{
+		}
 	}
 }
 
-void LogMngConfig::updateConfig(const string& key,const string& value)
+void LogApiConfig::updateConfig(const std::string& key,const std::string& value)
 {
 	if( !key.empty() || !value.empty() )	
 	{
@@ -47,7 +52,7 @@ void LogMngConfig::updateConfig(const string& key,const string& value)
 		{
 			if(_logApiCfg.find(key) == _logApiCfg.end() )
 			{
-				vector<string> tmp;
+				std::vector<std::string> tmp;
 				_logApiCfg[key] =tmp; 
 				_logApiCfg[key].push_back(value);
 			}
@@ -60,7 +65,7 @@ void LogMngConfig::updateConfig(const string& key,const string& value)
 	}
 }
 
-bool LogMngConfig::getConfigValue(const string& key,vector<string>& values) 
+bool LogApiConfig::getConfigValue(const std::string& key,std::vector<std::string>& values) 
 {
 	if(_logApiCfg.find(key) != _logApiCfg.end() )
 	{
@@ -70,12 +75,12 @@ bool LogMngConfig::getConfigValue(const string& key,vector<string>& values)
 	return false;
 }
 
-LogMngConfig::~LogMngConfig()
+LogApiConfig::~LogApiConfig()
 {
 
 }
 
-ostream& operator << ( ostream& out,const LogMngConfig& cfg)
+std::ostream& operator << ( std::ostream& out,const LogApiConfig& cfg)
 {
 	return out;
 }

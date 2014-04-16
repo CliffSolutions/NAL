@@ -1,3 +1,19 @@
+/******************************************************************************************************************
+ *	File Name    - logMngConfig.h
+ * Author       - gnarayana
+ * Modifier     - gnarayana
+ * Create Date  - 11/April/2014 
+ * Modifed Date - 11/April/2014
+ * Description  - Container class to hold configuration related to logManager
+ *						 - Current Implementation is for text file and XML file
+ *						 - Database stubs will be not be implemented.
+ * Project		 - NAL ( Network application logging )					
+ * Module		 - LogManger
+ * BU				 - DevGnana
+ * Company		 - Cliff S
+ * License		 - GPLV2 ( Open Source ) 
+ ******************************************************************************************************************/
+ 
 #ifndef __LOG_MNG_CONFIG__
 #define __LOG_MNG_CONFIG__
 
